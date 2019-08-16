@@ -18,7 +18,8 @@ class DBStorage:
     """
     __engine = None
     __session = None
-    models = (User, State, City, Amenity, Place, Review)
+    #models = {User, State, City, Amenity, Place, Review}
+    models = {State, City}
 
     def __init__(self):
         """
@@ -41,11 +42,11 @@ class DBStorage:
         sql_dict = {}
         models = self.models
         if cls:
-            models = list(cls)
+            models = {cls}
         for model in models:
             objects = self.__session.query(model).all()
             for obj in objects:
-                key = "{}.{}".format(cls.__name__, obj.id)
+                key = "{}.{}".format(type(obj).__name__, obj.id)
                 sql_dict[key] = obj
         return sql_dict
 
