@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 """This is the state class"""
 from os import getenv
-from models import storage
+from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
-
 
 class State(BaseModel, Base):
     """This is the class for State
@@ -24,6 +22,7 @@ class State(BaseModel, Base):
             '''
             City list for FileStorage
             '''
+            from models import storage
             cities_by_state = []
             for city in storage.all('City').values():
                 if city.state_id == self.id:
