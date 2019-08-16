@@ -19,7 +19,7 @@ class DBStorage:
     __engine = None
     __session = None
     #models = {User, State, City, Amenity, Place, Review}
-    models = {State, City}
+    models = {User, State, City}
 
     def __init__(self):
         """
