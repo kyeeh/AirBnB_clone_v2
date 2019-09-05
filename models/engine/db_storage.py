@@ -29,11 +29,10 @@ class DBStorage:
         password = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
         db = getenv("HBNB_MYSQL_DB")
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-        .format(user, password, host, db),
-        pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            user, password, host, db), pool_pre_ping=True)
         if getenv("HBNB_ENV") == "test":
-            Base.metadata.drop_all(bind=self.__engine)        
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """
@@ -68,7 +67,7 @@ class DBStorage:
     def reload(self):
         """
         create all tables in the database
-        create the current database scoped session 
+        create the current database scoped session
         """
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
@@ -76,7 +75,7 @@ class DBStorage:
         self.__session = Session()
 
     def delete(self, obj=None):
-        """ 
+        """
         delete from the current database session
         """
         if obj is not None:
@@ -84,6 +83,6 @@ class DBStorage:
 
     def close(self):
         """
-        call remove() method on the private session attribute (self.__session) 
+        call remove() method on the private session attribute (self.__session)
         """
         self.__session.close()
