@@ -28,7 +28,11 @@ class FileStorage:
         if cls is not None:
             new_dictionary = {}
             for key, values in FileStorage.__objects.items():
-                if(cls.__name__ in key):
+                #print("Clase: {}".format(cls.__name__))
+                if (type(cls) is str):
+                    #print("String: {}".format(cls))
+                    cls = eval(cls)
+                if (cls.__name__ in key):
                     new_dictionary.update({key: values})
             return new_dictionary
         else:
@@ -69,3 +73,9 @@ class FileStorage:
         if obj is not None:
             key = (type(obj).__name__) + '.' + obj.__dict__['id']
             del self.__objects[key]
+
+    def close(self):
+        """
+        call reload() method for deserializing the JSON file to objects
+        """
+        self.reload()

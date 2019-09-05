@@ -44,7 +44,9 @@ class DBStorage:
         if cls:
             models = {cls}
         for model in models:
-            objects = self.__session.query(model).all()
+            print(type(model))
+            objects = self.__session.query(eval(model)).all()
+            print(objects)
             for obj in objects:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 sql_dict[key] = obj
@@ -79,3 +81,9 @@ class DBStorage:
         """
         if obj is not None:
             self.__session.delete(obj)
+
+    def close(self):
+        """
+        call remove() method on the private session attribute (self.__session) 
+        """
+        self.__session.close()
